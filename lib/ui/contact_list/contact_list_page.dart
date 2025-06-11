@@ -33,6 +33,7 @@ class _ContactListPageState extends State<ContactListPage> {
     });
   }
 
+// build runs wen the state changes
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,8 +46,16 @@ class _ContactListPageState extends State<ContactListPage> {
             title: Text(_contacts[index].name), // Displays the contact's name
             subtitle: Text(_contacts[index].email),
             trailing: IconButton(
-              icon: Icon(Icons.star_border), onPressed: () {  },
-            ), // Displays the contact's email
+              icon: Icon(
+                _contacts[index].isFavorite ? Icons.star : Icons.star_border,
+                color: _contacts[index].isFavorite ? Colors.yellow : Colors.grey,
+              ), 
+              onPressed: () { 
+                setState(() {
+                  _contacts[index].isFavorite = !_contacts[index].isFavorite;
+                });
+               },
+            ), 
           );
         },
       ),
