@@ -3,8 +3,7 @@ import 'package:faker/faker.dart';
 import 'package:contact_app/data/contact.dart';
 
 class ContactListPage extends StatefulWidget {
-
- const ContactListPage({super.key});
+  const ContactListPage({super.key});
 
   @override
   State<ContactListPage> createState() => _ContactListPageState();
@@ -12,18 +11,27 @@ class ContactListPage extends StatefulWidget {
 
 class _ContactListPageState extends State<ContactListPage> {
   //underscore is used to indicate that this variable is private
-  final List<Contact> _contacts = List.generate(50, (index) {
-    return Contact(
-      name: faker.person.name(),
-      email: faker.internet.email(),
-      phoneNumber:
-          faker.randomGenerator
-              .integer(
-                1000000000, // Minimum 10-digit number
-              )
-              .toString(),
-    );
-  });
+  late List<Contact> _contacts;
+
+  // This method is called when the widget is first created
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    _contacts = List.generate(50, (index) {
+      return Contact(
+        name: faker.person.name(),
+        email: faker.internet.email(),
+        phoneNumber:
+            faker.randomGenerator
+                .integer(
+                  1000000000, // Minimum 10-digit number
+                )
+                .toString(),
+      );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,8 +43,9 @@ class _ContactListPageState extends State<ContactListPage> {
         itemBuilder: (context, index) {
           return ListTile(
             title: Text(_contacts[index].name), // Displays the contact's name
-            subtitle: Text(
-              _contacts[index].email,
+            subtitle: Text(_contacts[index].email),
+            trailing: IconButton(
+              icon: Icon(Icons.star_border), onPressed: () {  },
             ), // Displays the contact's email
           );
         },
